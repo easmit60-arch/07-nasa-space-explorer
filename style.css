@@ -141,8 +141,31 @@ button:hover {
   line-height: 1.6;
 }
 
+.archive-link-wrap {
+  margin: 0 20px 22px;
+  color: #e6efff;
+  text-align: center;
+}
+
+.archive-link-wrap a {
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.archive-link-wrap a:hover,
+.archive-link-wrap a:focus-visible {
+  color: #ffffff;
+  border-bottom-color: var(--nasa-red);
+}
+
 @media (min-width: 600px) {
   .fact-card {
+    margin: 0 0 22px;
+  }
+
+  .archive-link-wrap {
     margin: 0 0 22px;
   }
 }
