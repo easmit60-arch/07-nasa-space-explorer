@@ -19,11 +19,26 @@
       <button>Get Space Images</button>
     </div>
 
+    <section class="fact-card" aria-live="polite" aria-atomic="true">
+      <h2>Did You Know?</h2>
+      <p id="factText">Loading a space fact...</p>
+    </section>
+
     <div id="gallery" class="gallery">
       <div class="placeholder">
         <div class="placeholder-icon">🔭</div>
         <p>Select a date range and click "Get Space Images" to explore the cosmos!</p>
       </div>
+    </div>
+  </div>
+
+  <div id="apodModal" class="modal hidden" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <button id="closeModal" class="close-modal" aria-label="Close modal">×</button>
+      <div id="modalMedia" class="modal-media"></div>
+      <h2 id="modalTitle"></h2>
+      <p id="modalDate" class="modal-date"></p>
+      <p id="modalExplanation" class="modal-explanation"></p>
     </div>
   </div>
 
