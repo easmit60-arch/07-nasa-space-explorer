@@ -1,17 +1,19 @@
-// Find our date picker inputs on the page
 const startInput = document.getElementById('startDate');
 const endInput = document.getElementById('endDate');
 const button = document.querySelector('button');
 const gallery = document.getElementById('gallery');
 
+
 // NASA provides a public demo key for beginner projects
-const API_KEY = 'DEMO_KEY';
+const API_KEY = 'rwzkR3d3SNKxVh1GTnlObdnHM92Fs6KXLF9dSeNW';
 
 // Call the setupDateInputs function from dateRange.js
 // This sets up the date pickers to:
 // - Default to a range of 9 days (from 9 days ago to today)
 // - Restrict dates to NASA's image archive (starting from 1995)
 setupDateInputs(startInput, endInput);
+
+
 
 // Build one card for each APOD item and return the HTML string
 function createGalleryCard(item) {
@@ -33,15 +35,28 @@ function createGalleryCard(item) {
 async function getSpaceImages() {
 	const startDate = startInput.value;
 	const endDate = endInput.value;
-
+if (items.length === 0) {
+  gallery.innerHTML = '<p class="placeholder">No images found for this date range.</p>';
+  return;
+}
 	// Basic check so we do not call the API with missing dates
 	if (!startDate || !endDate) {
 		gallery.innerHTML = '<p class="placeholder">Please choose both start and end dates.</p>';
 		return;
 	}
+  if (startDate > endDate) {
+  gallery.innerHTML = '<p class="placeholder">Start date must be before end date.</p>';
+  return;
+  }
 
 	gallery.innerHTML = '<p class="placeholder">Loading space images...</p>';
+	button.disabled = true;
+	button.textContent = 'Loading...';
 
+  finally {
+  button.disabled = false;
+  button.textContent = 'Get Space Images';
+}
 	const url = `https://api.nasa.gov/planetary/apod?api_key=${API_KEY}&start_date=${startDate}&end_date=${endDate}&thumbs=true`;
 
 	try {
@@ -60,9 +75,13 @@ async function getSpaceImages() {
 		items.reverse();
 
 		gallery.innerHTML = items.map((item) => createGalleryCard(item)).join('');
+		button.disabled = false;
+		button.textContent = 'Get Space Images';
 	} catch (error) {
 		gallery.innerHTML = '<p class="placeholder">Could not load images right now. Please try again.</p>';
 		console.error('Error loading NASA images:', error);
+		button.disabled = false;
+		button.textContent = 'Get Space Images';
 	}
 }
 
