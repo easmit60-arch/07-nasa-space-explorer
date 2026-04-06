@@ -21,7 +21,6 @@ const spaceFacts = [
 	'Light from the Sun takes about 8 minutes and 20 seconds to reach Earth.'
 ];
 
-
 // Use NASA's public demo key by default (works for classroom projects)
 // If needed, you can set a custom key with: window.NASA_API_KEY = 'your_key'
 const API_KEY = window.NASA_API_KEY || 'DEMO_KEY';
@@ -38,8 +37,6 @@ function showRandomFact() {
 }
 
 showRandomFact();
-
-
 
 // Build one card for each APOD item and return the HTML string
 function createGalleryCard(item, index) {
@@ -60,6 +57,15 @@ function createGalleryCard(item, index) {
 			<p>${item.explanation.slice(0, 170)}...</p>
 		</article>
 	`;
+}
+
+function getSelectedItemFromCard(card) {
+	if (!card) {
+		return null;
+	}
+
+	const index = Number(card.dataset.index);
+	return currentItems[index] || null;
 }
 
 function getYoutubeEmbedUrl(url) {
@@ -110,6 +116,25 @@ function closeModal() {
 	modal.setAttribute('aria-hidden', 'true');
 	modalMedia.innerHTML = '';
 	document.body.classList.remove('modal-open');
+}
+
+function handleGalleryActivation(event) {
+	const isKeyboardEvent = event.type === 'keydown';
+	if (isKeyboardEvent && event.key !== 'Enter' && event.key !== ' ') {
+		return;
+	}
+
+	const card = event.target.closest('.gallery-item');
+	const selectedItem = getSelectedItemFromCard(card);
+	if (!selectedItem) {
+		return;
+	}
+
+	if (isKeyboardEvent) {
+		event.preventDefault();
+	}
+
+	openModal(selectedItem);
 }
 
 // Fetch APOD data for the selected date range
@@ -170,40 +195,8 @@ async function getSpaceImages() {
 button.addEventListener('click', getSpaceImages);
 
 // Open modal when a gallery item is clicked or activated with keyboard
-gallery.addEventListener('click', (event) => {
-	const card = event.target.closest('.gallery-item');
-	if (!card) {
-		return;
-	}
-
-	const index = Number(card.dataset.index);
-	const selectedItem = currentItems[index];
-	if (!selectedItem) {
-		return;
-	}
-
-	openModal(selectedItem);
-});
-
-gallery.addEventListener('keydown', (event) => {
-	if (event.key !== 'Enter' && event.key !== ' ') {
-		return;
-	}
-
-	const card = event.target.closest('.gallery-item');
-	if (!card) {
-		return;
-	}
-
-	event.preventDefault();
-	const index = Number(card.dataset.index);
-	const selectedItem = currentItems[index];
-	if (!selectedItem) {
-		return;
-	}
-
-	openModal(selectedItem);
-});
+gallery.addEventListener('click', handleGalleryActivation);
+gallery.addEventListener('keydown', handleGalleryActivation);
 
 closeModalButton.addEventListener('click', closeModal);
 
