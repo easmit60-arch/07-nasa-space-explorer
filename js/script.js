@@ -2,7 +2,6 @@ const startInput = document.getElementById('startDate');
 const endInput = document.getElementById('endDate');
 const button = document.querySelector('button');
 const gallery = document.getElementById('gallery');
-let requestCount = 0;
 
 
 // NASA provides a public demo key for beginner projects
@@ -48,8 +47,7 @@ async function getSpaceImages() {
 		return;
 	}
 
-	requestCount += 1;
-	gallery.innerHTML = `<p class="placeholder">Loading request #${requestCount}...</p>`;
+	gallery.innerHTML = '<p class="placeholder">Loading space images...</p>';
 	button.disabled = true;
 	button.textContent = 'Loading...';
 
