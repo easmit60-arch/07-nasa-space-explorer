@@ -23,7 +23,7 @@ const spaceFacts = [
 
 // Use NASA's public demo key by default (works for classroom projects)
 // If needed, you can set a custom key with: window.NASA_API_KEY = 'your_key'
-const API_KEY = window.NASA_API_KEY || 'DEMO_KEY';
+const API_KEY = window.NASA_API_KEY || 'rwzkR3d3SNKxVh1GTnlObdnHM92Fs6KXLF9dSeNW';
 
 // Call the setupDateInputs function from dateRange.js
 // This sets up the date pickers to:
